@@ -1,2 +1,9 @@
 # Docker-K8s
-A hello world for docker and Kubernetes
+
+This project is a hello world for Docker and K8s
+
+## Docker
+
+First we will start by pulling a docker image. Docker images are 
+
+## Kubernetes
