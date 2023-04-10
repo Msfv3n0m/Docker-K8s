@@ -8,7 +8,7 @@ First we will pull a docker image. An **image** can be thought of as a file syst
 `docker pull eclipse/cpp_gcc` </br>
 
 Now that we have a local instance of the image, we can change it programmatically using a dockerfile. Our dockerfile simply creates a folder titled john316 in the root directory. Many people will use this file to update/upgrade a docker images packages to ensure they are up to date. The resulting image is then saved on our local machine. To build the new docker image with the dockerfile, we will use the following command: </br> </br>
-`docker build . -t "cpp:Dockerfile"` </br>
+`docker build ./Docker/. -t "cpp:Dockerfile"` </br>
 
 After that finishes is run, you can view the list of images you have by running the `docker images` command </br>
 
@@ -37,7 +37,9 @@ First, we have to start minikube: </br> </br>
 `minikube start` </br>
 
 We already have a configuration file to create a kubernetes pod in the K8s folder. The pod creates a single container that runs the httd image; this mirrors the last configuration we had in docker. </br> </br>
-`kubectl apply -f httpd-pod.yaml` </br>
+`kubectl apply -f K8s/httpd-*.yaml` </br>
+
+`kubectl port-forward httpd-pod 8080:80`
 
 `kubectl get pods` will show you the pod we just created. </br></br>
 
