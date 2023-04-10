@@ -30,6 +30,6 @@ To kill your docker containers use the following command: </br> </br>
 `docker kill <container id>` </br>
 ### Organization
 Docker can also be used to organize software based on functionality. For example, it would be nice to have all your website stuff not just in a folder, but in a container. Then, you might have your ftp server in another docker container. A third could contain your database and so on and so forth. To get an idea of how a docker container could be used for organization, run this command to setup a wordpress site: </br> </br>
-`docker run -p 80:80 -d wordpress` </br>
+`docker run -p 80:80 -d wordpress` </br> </br>
 Give it a couple seconds to start and you'll have a fully operational wordpress site!
 ## Kubernetes
