@@ -37,11 +37,17 @@ First, we have to start minikube: </br> </br>
 `minikube start` </br>
 
 We already have a configuration file to create a kubernetes pod in the K8s folder. The pod creates a single container that runs the httd image; this mirrors the last configuration we had in docker. </br> </br>
-`kubectl apply -f K8s/httpd-*.yaml` </br>
-
-`kubectl port-forward httpd-pod 8080:80`
+`kubectl apply -f K8s/httpd-pod.yml` </br>
 
 `kubectl get pods` will show you the pod we just created. </br></br>
+
+The pod is created, but we still cant access the website. Why? Because the website is only available on the inside of the kubernetes cluster. There are a two main ways we can access it:</br>
+1. VPN into the k8s cluster </br>
+2. Forward a port from the host to the httpd-pod pod  </br>
+
+The easiest solution in this case is just to forward a port </br>
+`kubectl port-forward httpd-pod 8080:80` </br> </br>
+
 
 To see that the pod is running, click on the ports tab above your terminal and add port 80 to the list. Now, if you click the globe icon that says "open in browser" you will see that the website is up! Now, kubernetes will use its build-in autoscaling mechanism to scale up or down depending on the demand of your web browser. </br> </br>
 
