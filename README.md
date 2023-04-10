@@ -30,6 +30,19 @@ To kill your docker containers use the following command: </br> </br>
 `docker kill <container id>` </br>
 ### Organization
 Docker can also be used to organize software based on functionality. For example, it would be nice to have all your website stuff not just in a folder, but in a container. Then, you might have your ftp server in another docker container. A third could contain your database and so on and so forth. To get an idea of how a docker container could be used for organization, run this command to setup a wordpress site: </br> </br>
-`docker run -p 80:80 -d wordpress` </br> </br>
+`docker run -p 80:80 -d httpd` </br> </br>
 Give it a couple seconds to start and you'll have a fully operational wordpress site!
 ## Kubernetes
+First, we have to start minikube: </br> </br>
+`minikube start` </br>
+
+We already have a configuration file to create a kubernetes pod in the K8s folder. The pod creates a single container that runs the httd image; this mirrors the last configuration we had in docker. </br> </br>
+`kubectl apply -f httpd-pod.yaml` </br>
+
+`kubectl get pods` will show you the pod we just created. </br></br>
+
+To see that the pod is running, click on the ports tab above your terminal and add port 80 to the list. Now, if you click the globe icon that says "open in browser" you will see that the website is up! Now, kubernetes will use its build-in autoscaling mechanism to scale up or down depending on the demand of your web browser. </br> </br>
+
+And if for some reason, you wanted to get shell access to a container in your pod, you can run `kubectl get pods` to get the pod, and `kubectl get pods <POD_NAME_HERE> -o jsonpath='{.spec.containers[*].name}'` to get a list of containers in the pod. Then you can use that information to run /bin/bash in the container </br> </br>
+`kubectl exec --stdin --tty httpd-pod -- /bin/bash` </br>
+`kubectl exec <pod> -c <container> -- /bin/bash`
