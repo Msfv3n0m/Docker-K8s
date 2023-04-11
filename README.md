@@ -45,7 +45,7 @@ The pod is created, but we still cant access the website. Why? Because the websi
 1. VPN into the k8s cluster </br>
 2. Forward a port from the host to the httpd-pod pod  </br>
 
-The easiest solution in this case is just to forward a port </br>
+The easiest solution in this case is just to forward a port so that it can be accessed from outside of our K8s cluster </br>
 `kubectl port-forward httpd-pod 8080:80` </br> </br>
 
 
