@@ -1,6 +1,6 @@
 # Docker-K8s
 
-This project is a hello world for Docker and K8s
+This project is a hello world for Docker and K8s. Follow along in GitHub codespaces to get some hands-on practice with docker and k8s!
 
 ## Docker
 ### Software Development
