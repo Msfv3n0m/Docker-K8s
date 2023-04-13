@@ -27,7 +27,7 @@ Now, any file we make in our container's projects folder will propegate to our h
 `sudo g++ -o main.exe main.cpp`
 </br>
 
-### Organization
+### Organization and Business Operations
 Docker can also be used to organize software based on functionality. For example, it would be nice to have all your website stuff not just in a folder, but in a container. Then, you might have your ftp server in another docker container. A third could contain your database and so on and so forth. To get an idea of how a docker container could be used for organization, run this command to setup a wordpress site: </br> </br>
 `docker run -p 80:80 -d httpd` </br> </br>
 Give it a couple seconds to start and you'll have a fully operational wordpress site! the -p option is used to allow inbound traffic from the host system's port 80 to the container's port 80. In this way, container's have a similar firewall to a regular computer. The default configuration for host-based firewalls is to allow outbound traffic and deny inbound traffic. Likewise, our container will allow outbound traffic and deny inbound traffic unless otherwise specified. The -p option is allowing inbound traffic to our docker container. You will see a notification at the bottom-right of your browser after executing the command above; click on it and it will take you to your website! </br>
