@@ -12,26 +12,28 @@ Now that we have a local instance of the image, we can change it programmaticall
 
 After that finishes is run, you can view the list of images you have by running the `docker images` command </br>
 
-This next command will run an image such that we have an interactable container: </br> </br>
+This next command will run an image such that we have an shell inside the container: </br> </br>
 
 `docker run -it --rm <image id> /bin/bash` </br>
 
-This will give you a shell inside the container! Pretty cool, but how does this help with software development? Well, if we `exit` from this container, we can create a new one that maps a folder from our host machine to the docker container. This will let us share files between the two filesystems. The following command will run the docker container mapping the current directory to the `/projects` folder in the docker container: </br> </br>
+Now we have a cli inside our container! Now we can explore to see what's here. `ps auxf` will display the processes that are running inside the container. Kinda like Task Manager in Windows, but there's not many. This is because the container is not a full computer. It only runs the processes that it has to; in this way, it differs from a VM or a normal computer. Because images/containers are created to be small, they are lightweight, easily portable, and have a relatively small footprint. `sudo cat /etc/shadow` will show you the list of users inside the container. These users are not the same as the ones on your host machine.  </br>
+In summary, containers have their own file systems, users, processes, and networks. All of these are exclusive to the container(s) on the host system, and do not exist on the host system. </br>
+Now you can use the `exit` command to return to your host system </br> </br>
+
+Now, a shell in a container is pretty cool, but how does this help with software development? Well, we can create a new one that maps a folder from our host machine to the docker container. This will let us share files between the two filesystems. The following command will run the docker container mapping the current directory to the `/projects` folder in the docker container: </br> </br>
 `docker run -it --rm -v /workspaces/Docker-K8s/Docker/project:/projects <image id> /bin/bash` </br>
 
 Now, any file we make in our container's projects folder will propegate to our hosts project folder and vise versa! This means we can use any tools in the docker container (such as the g++ compiler) and the results will show up on our host machine! In your docker container, create a small C++ program named `main.cpp`. Then, compile it with the following command: </br> </br>
 `sudo g++ -o main.exe main.cpp`
 </br>
 
-To list your docker containers use the following command: </br> </br>
-`docker ps` </br>
-
-To kill your docker containers use the following command: </br> </br>
-`docker kill <container id>` </br>
 ### Organization
 Docker can also be used to organize software based on functionality. For example, it would be nice to have all your website stuff not just in a folder, but in a container. Then, you might have your ftp server in another docker container. A third could contain your database and so on and so forth. To get an idea of how a docker container could be used for organization, run this command to setup a wordpress site: </br> </br>
 `docker run -p 80:80 -d httpd` </br> </br>
-Give it a couple seconds to start and you'll have a fully operational wordpress site!
+Give it a couple seconds to start and you'll have a fully operational wordpress site! You will see a notification at the bottom-right of your browser; click on it and it will take you to your website! </br>
+
+`docker ps` will show your running container along with its container ID. You can kill the container with `docker kill <container id>`
+
 ## Kubernetes
 First, we have to start minikube: </br> </br>
 `minikube start` </br>
