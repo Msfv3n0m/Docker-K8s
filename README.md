@@ -49,6 +49,8 @@ The pod is created, but we still cant access the website. Why? Because the websi
 2. Forward a port from the host to the httpd-pod pod  </br>
 
 The easiest solution in this case is just to forward a port so that it can be accessed from outside of our K8s cluster </br>
-`kubectl port-forward httpd-pod 8080:80` </br> </br>
+`kubectl port-forward httpd-pod 8080:80` </br>
 
 To see the service running on the pod, click on the ports tab above your terminal and add port 80 to the list. Now, if you click the globe icon that says "open in browser" you will see that the website is up! Now, kubernetes will use its built-in autoscaling mechanism to scale up or down depending on the demand of your web browser. </br> </br>
+
+The deployment.yml file in the k8s folder contains a simple kubernetes deployment that runs a wordpress site. Executing a deployment file uses the same method we used to deploy a pod: `kubectl apply -f K8s/deployment.yml`. 
