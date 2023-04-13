@@ -1,0 +1,5 @@
+services:
+  box1:
+    build: .
+  box2:
+    build: .

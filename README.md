@@ -30,29 +30,25 @@ Now, any file we make in our container's projects folder will propegate to our h
 ### Organization
 Docker can also be used to organize software based on functionality. For example, it would be nice to have all your website stuff not just in a folder, but in a container. Then, you might have your ftp server in another docker container. A third could contain your database and so on and so forth. To get an idea of how a docker container could be used for organization, run this command to setup a wordpress site: </br> </br>
 `docker run -p 80:80 -d httpd` </br> </br>
-Give it a couple seconds to start and you'll have a fully operational wordpress site! You will see a notification at the bottom-right of your browser; click on it and it will take you to your website! </br>
+Give it a couple seconds to start and you'll have a fully operational wordpress site! the -p option is used to allow inbound traffic from the host system's port 80 to the container's port 80. In this way, container's have a similar firewall to a regular computer. The default configuration for host-based firewalls is to allow outbound traffic and deny inbound traffic. Likewise, our container will allow outbound traffic and deny inbound traffic unless otherwise specified. The -p option is allowing inbound traffic to our docker container. You will see a notification at the bottom-right of your browser after executing the command above; click on it and it will take you to your website! </br>
 
-`docker ps` will show your running container along with its container ID. You can kill the container with `docker kill <container id>`
+`docker ps` will show your running container(s) along with their container IDs. You can kill the container with `docker kill <container id>` </br> </br>
+
+Now, we can also declaratively assembly a network of containers using a docker-compose file. In this file, we build a new image using our dockerfile and deploy 2 docker containers based on that template. To do this, first `cd Docker` into the docker folder and run `docker compose up -d` to execute the docker-compose file. Then, you can run `docker ps` to see both of the docker containers running on your host machine. After that, you can `cd ..` to return to the parent directory. But again, the problem with this is that docker compose will not guarentee that the container is running in a healthy state. </br> Kubernetes: enter stage right
 
 ## Kubernetes
-First, we have to start minikube: </br> </br>
-`minikube start` </br>
+Minikube is k8s running as both master and worker node on a single machine. So, for the purposes of this demonstration we must start minikube with `minikube start` </br> </br>
 
-We already have a configuration file to create a kubernetes pod in the K8s folder. The pod creates a single container that runs the httd image; this mirrors the last configuration we had in docker. </br> </br>
+We already have a configuration file to create a kubernetes pod in the K8s folder. The pod contains a single container that runs the httpd image; this mirrors the manual configuration we had in docker. </br> </br>
 `kubectl apply -f K8s/httpd-pod.yml` </br>
 
 `kubectl get pods` will show you the pod we just created. </br></br>
 
-The pod is created, but we still cant access the website. Why? Because the website is only available on the inside of the kubernetes cluster. There are a two main ways we can access it:</br>
+The pod is created, but we still cant access the website. Why? Because the website is only available on the inside of the kubernetes cluster. There are a two easy ways we can access it: </br>
 1. VPN into the k8s cluster </br>
 2. Forward a port from the host to the httpd-pod pod  </br>
 
 The easiest solution in this case is just to forward a port so that it can be accessed from outside of our K8s cluster </br>
 `kubectl port-forward httpd-pod 8080:80` </br> </br>
 
-
-To see that the pod is running, click on the ports tab above your terminal and add port 80 to the list. Now, if you click the globe icon that says "open in browser" you will see that the website is up! Now, kubernetes will use its build-in autoscaling mechanism to scale up or down depending on the demand of your web browser. </br> </br>
-
-And if for some reason, you wanted to get shell access to a container in your pod, you can run `kubectl get pods` to get the pod, and `kubectl get pods <POD_NAME_HERE> -o jsonpath='{.spec.containers[*].name}'` to get a list of containers in the pod. Then you can use that information to run /bin/bash in the container </br> </br>
-`kubectl exec --stdin --tty httpd-pod -- /bin/bash` </br>
-`kubectl exec <pod> -c <container> -- /bin/bash`
+To see the service running on the pod, click on the ports tab above your terminal and add port 80 to the list. Now, if you click the globe icon that says "open in browser" you will see that the website is up! Now, kubernetes will use its built-in autoscaling mechanism to scale up or down depending on the demand of your web browser. </br> </br>
